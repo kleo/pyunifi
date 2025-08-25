@@ -65,6 +65,7 @@ class Controller:  # pylint: disable=R0902,R0904
             host,
             username,
             password,
+            token,
             port=8443,
             version="v5",
             site_id="default",
@@ -89,6 +90,7 @@ class Controller:  # pylint: disable=R0902,R0904
         self.port = port
         self.username = username
         self.password = password
+        self.token = token
         self.site_id = site_id
         self.ssl_verify = ssl_verify
 
@@ -184,7 +186,7 @@ class Controller:  # pylint: disable=R0902,R0904
 
         response = self.session.post(
             self.auth_url,
-            json={"username": self.username, "password": self.password},
+            data=json.dumps({"username": self.username, "password": self.password, "ubic_2fa_token": self.token}),
             headers=self.headers,
         )
 
